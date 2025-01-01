@@ -1,0 +1,25 @@
+class Solution {
+    public int solution(String[][] board, int h, int w) {
+        int answer = 0;
+
+        // 이동할 방향: 상, 하, 좌, 우
+        int[] dx = {-1, 1, 0, 0};
+        int[] dy = {0, 0, -1, 1};
+
+        String targetColor = board[h][w]; // 기준 위치의 색상
+
+        // 상하좌우를 확인
+        for (int i = 0; i < 4; i++) {
+            int nx = h + dx[i];
+            int ny = w + dy[i];
+
+            // 범위를 벗어나지 않고 색상이 같은 경우
+            if (nx >= 0 && nx < board.length && ny >= 0 && ny < board[0].length) {
+                if (board[nx][ny].equals(targetColor)) {
+                    answer++;
+                }
+            }
+        }
+        return answer;
+    }
+}
