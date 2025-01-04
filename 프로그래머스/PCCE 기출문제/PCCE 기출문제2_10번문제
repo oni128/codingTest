@@ -1,3 +1,5 @@
+//soultion1
+
 import java.util.Arrays;
 class Solution {
     public int solution(int[] mats, String[][] park) {
@@ -28,6 +30,44 @@ class Solution {
             }
         }
 
+        return answer;
+    }
+}
+
+
+//solution2
+
+import java.util.*;
+class Solution {
+    public int solution(int[] mats, String[][] park) {
+        int answer = -1;
+
+        int parkY = park.length;
+        int parkX = park[0].length;
+        Arrays.sort(mats); // park길이 변수 선언 + mats배열 정렬
+        
+        for(int m=0; m<mats.length; m++){
+            int result = 0;
+            if(mats[m] > Math.min(parkX, parkY)){
+                result--; // 돗자리가 너무 크면 out
+            } else {
+                for(int y=0; y<=parkY-mats[m]; y++){
+                    for(int x=0; x<=parkX-mats[m]; x++){
+                        result = 0;
+                        for(int dy=0; dy<mats[m]; dy++){
+                            for(int dx=0; dx<mats[m]; dx++){
+                                if(!park[y+dy][x+dx].equals("-1")){
+                                    result--; // "-1"이 아닌 칸이 존재하면 out
+                                }
+                            }
+                        }
+                        if(result == 0){
+                            answer = mats[m];
+                        }
+                    }
+                }
+            }
+        }
         return answer;
     }
 }
