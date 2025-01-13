@@ -1,0 +1,29 @@
+// solution 1
+
+class Solution {
+    public String solution(String my_string) {
+        String answer = "";
+        String vowels = "aeiou";
+        for(int i=0; i < my_string.length(); i++){
+            char current = my_string.charAt(i);
+            if(!vowels.contains(String.valueOf(current))){
+                answer += current;
+            }
+        }
+        return answer;
+    }
+}
+
+// solution 2
+
+class Solution {
+    public String solution(String my_string) {
+        String[] vowels = new String[]{"a", "e", "i", "o", "u"};
+        for(String vowel : vowels){
+            if(my_string.contains(vowel)){
+                my_string = my_string.replace(vowel, "");
+            }
+        }
+        return my_string;
+    }
+}
