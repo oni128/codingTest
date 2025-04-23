@@ -24,13 +24,17 @@ public class Main {
                     arr[j] = 0;
 
                     Arrays.sort(arr);
-                    break;
+
+                    for(int k=2; k<9; k++) {
+                        System.out.println(arr[k]);
+                    }
+                    return;
+
+
                 }
             }
         }
-        for(int i=2; i<9; i++) {
-            System.out.println(arr[i]);
-        }
+
 
     }
 
