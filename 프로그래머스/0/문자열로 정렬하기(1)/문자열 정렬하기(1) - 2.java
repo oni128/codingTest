@@ -5,12 +5,12 @@ class Solution {
 
         String re = my_string.replaceAll("[a-z]", "");
         String[] result = re.split("");
-        // result에서 정렬하기
-        Arrays.sort(result);
         int[] answer = new int[result.length];
         for(int i=0; i<result.length; i++){
             answer[i] = Integer.parseInt(result[i]);
         }
+        // answer에서 정렬하기
+        Arrays.sort(answer);
         return answer;
     }
 }
