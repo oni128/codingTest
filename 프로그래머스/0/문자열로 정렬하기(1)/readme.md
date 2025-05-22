@@ -24,7 +24,7 @@
 </code>
 
 위의 코드에서 알게된 점
-- char[] result = re.toCharArray(); 
+- char[] result = re.`toCharArray()`; 
   - 문자열을 문자(char)타입의 배열로 변환.
 - Integer.parseInt(c) 
   - `문자열 c`를 정수형(Int)타입으로 변환.
