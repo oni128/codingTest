@@ -1,0 +1,20 @@
+import java.util.Arrays;
+
+class Solution {
+    public String solution(String my_string) {
+        my_string = my_string.toLowerCase();
+        String[] result = new String[my_string.length()];
+        for(int i=0; i<result.length; i++) {
+            result[i] = String.valueOf(my_string.charAt(i));
+        }
+        Arrays.sort(result);
+        
+        StringBuilder sb = new StringBuilder();
+        for(String a : result) {
+            sb.append(a);
+        }
+        
+        return sb.toString();
+        
+    }
+}
