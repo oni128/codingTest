@@ -1,0 +1,39 @@
+import java.util.*;
+
+
+
+class Solution {
+    
+    private static final Map<Character, Character> PAIRS = Map.of(
+    ')', '(',
+    '}', '{',
+    ']', '['
+    );  
+    
+    public int solution(String s) {
+        
+        int n = s.length();
+        String doubled = s + s;
+        int answer = 0;
+
+        // 회전
+        A: for(int i=0; i<n; i++) {
+            Deque<Character> stack = new ArrayDeque<>();  
+            // 올바른 괄호 문자열인지 확인 
+            for(int j=i; j<i+n; j++) {
+                char c = doubled.charAt(j);
+                if(PAIRS.containsKey(c)) { // 닫는 괄호
+                    if(stack.isEmpty() || ! stack.pop().equals(PAIRS.get(c))) { // 다른 괄호
+                        continue A;
+                    }
+                } else {                    // 여는 괄호
+                    stack.push(c);
+                }
+            }
+            if(stack.isEmpty()) answer++;
+        }
+        
+        // 반환: 올바른 괄호 문자열 갯수
+        return answer;
+    }
+}
