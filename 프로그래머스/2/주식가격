@@ -1,0 +1,30 @@
+import java.util.*;
+class Solution {
+    public int[] solution(int[] prices) {
+        
+        // 떨어지지 않은 기간 저장용 배열 선언
+        int[] answer = new int[prices.length];
+        
+        int n = prices.length;
+        // Deque<Integer> stack = new ArrayDeque<>();
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+        
+        // 스택을 사용하여 이전 가격과 현재 가격 비교
+        for(int i=1; i<n; i++) {
+            // 이전 가격 > 현재 가격 -> 가격이 떨어졌을 때
+            while(!stack.isEmpty() && prices[stack.peek()] > prices[i]) {
+                int past = stack.pop();
+                answer[past] = i - past ;
+            }
+            stack.push(i);
+        }
+        // 스택안에 있는 가격
+        while(!stack.isEmpty()) {
+            int p = stack.pop();
+            answer[p] = n - 1 - p;
+        }
+        return answer;
+        
+    }
+}
