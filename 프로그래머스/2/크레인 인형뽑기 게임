@@ -1,0 +1,31 @@
+import java.util.*;
+
+class Solution {
+    public int solution(int[][] board, int[] moves) {
+        
+        Deque<Integer> stack = new ArrayDeque<>();
+        
+        int answer = 0;
+        
+        // 스택에 푸시 
+        for(int i=0; i<moves.length; i++) { // 열 
+            int column = moves[i];
+            for(int row=0; row<board.length; row++) { // 행
+                if(board[row][column-1] != 0) {
+                    
+                    if(!stack.isEmpty() && stack.peek() == board[row][column-1]) { // 인형이 같은 경우 (제거)
+                        stack.pop();
+                        answer += 2;
+                    } else {
+                        stack.push(board[row][column-1]);
+                    }
+                    board[row][column-1] = 0;           
+                    break;
+                }
+            }
+        }
+        
+        // 반환 : 사라진 인형의 개수
+        return answer;
+    }
+}
