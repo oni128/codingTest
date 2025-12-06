@@ -1,0 +1,22 @@
+import java.util.*;
+
+class Solution {
+    public String solution(String[] cards1, String[] cards2, String[] goal) {
+        
+        StringBuilder sb = new StringBuilder();
+        
+        int count1 = 0; 
+        int count2 = 0;
+
+        for(String g : goal) {
+            if(count1 < cards1.length && cards1[count1].equals(g)) { // cards1과 일치
+                count1++;
+            } else if(count2 < cards2.length && cards2[count2].equals(g)) { // cards2와 일치
+                count2++;
+            } else {
+                return "No";
+            }
+        }
+        return "Yes";
+    }
+}
