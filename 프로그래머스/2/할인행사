@@ -1,0 +1,28 @@
+import java.util.*;
+
+class Solution {
+    // 원하는 제품 , 수량 , 할인 제품
+    public int solution(String[] want, int[] number, String[] discount) {
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for(int i=0; i<want.length; i++) {
+            map.put(want[i], number[i]);
+        }
+        int count = 0;
+        int k = 0;
+        A: for(int i=0; i<discount.length - 9; i++) {
+            HashMap<String, Integer> goods = new HashMap<>();
+            for(int j=i; j< 10 + i; j++) {
+                String product = discount[j];
+                goods.put(product, goods.getOrDefault(product, 0) + 1);
+            }
+            for(String w : want) {
+                if( goods.getOrDefault(w,0) < map.get(w)) {
+                    continue A;
+                }
+            }
+            count ++;
+        }
+        return count;
+    }
+}
