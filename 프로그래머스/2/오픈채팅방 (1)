@@ -2,15 +2,15 @@ import java.util.*;
 
 class Solution {
     public String[] solution(String[] record) {
-
+        
         int n = record.length;
-
+        
         // hashMap으로 유저 저장 <유저아이디, 닉네임>
         HashMap<String, String> users = new HashMap<>();
-
+        
         // 행동 저장 <행동, 닉네임>
         List<String[]> actions = new ArrayList<>();
-
+        
         for(String s : record) {
             String[] part = s.split(" ");
             String action = part[0];
@@ -19,15 +19,15 @@ class Solution {
                 String nickName = part[2];
                 users.put(userId, nickName);
             }
-
+            
             // 행동 저장
-            if(!action.equals("Change")) { // 입장, 퇴장만
+            if(!action.equals("Change")) { // 입장, 퇴장만 
                 actions.add(new String[]{userId, action});
             }
-
+            
         }
-
-        // 출력물
+        
+        // 출력물 
         String[] answer = new String[actions.size()];
 
         for(int i=0; i<answer.length; i++) {
@@ -37,11 +37,11 @@ class Solution {
             }
             else if(actions.get(i)[1].equals("Leave")) {
                 answer[i] = name + "님이 나갔습니다.";
-            }
+            } 
         }
-
+        
         return answer;
-
-
+    
+        
     }
 }

@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Solution {
+    public String[] solution(String[] record) {
+
+        // 행동 저장
+        HashMap<String, String> actions = new HashMap<>();
+        actions.put("Enter", "님이 들어왔습니다.");
+        actions.put("Leave", "님이 나갔습니다.");
+
+        // 유저 저장 <uid, name>
+        HashMap<String, String> uid = new HashMap<>();
+
+        for(String r : record) {
+            String[] part = r.split(" ");
+
+            // Leave 제외
+            if(part.length == 3) {
+                uid.put(part[1], part[2]);
+            }
+        }
+        // 출력
+        List<String> answer = new ArrayList<>();
+        for(String r : record) {
+            String[] part = r.split(" ");
+            if(actions.containsKey(part[0])) {
+                answer.add(uid.get(part[1]) + actions.get(part[0]));
+            }
+        }
+
+        return answer.toArray(new String[0]);
+    }
+}
