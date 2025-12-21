@@ -1,0 +1,39 @@
+import java.util.*;
+
+class Solution {
+    // 이용자 ID, 신고한 이용자 정보, 정지 기준이 되는 횟수
+    public int[] solution(String[] id_list, String[] report, int k) {
+        //<신고당한 id, 신고한 id>
+        HashMap<String, HashSet<String>> reportMap = new HashMap<>();
+        //<이메일 받는 id, 횟수>
+        HashMap<String, Integer> count = new HashMap<>();
+        
+        for(String r : report) {
+            String[] all = r.split(" ");
+            String reporter = all[0];
+            String reported = all[1];
+                
+            if(!reportMap.containsKey(reported)) { // 신고 받은 기록이 없다면 
+                reportMap.put(reported, new HashSet<>());
+            }
+            reportMap.get(reported).add(reporter);
+        }
+            // ArrayList<Integer> answer = new ArrayList<>();
+            int[] answer = new int[id_list.length];
+            
+            // k회 이상 신고 받을경우 이메일 발송
+            reportMap.entrySet().stream().
+                forEach(entry -> {
+                    if(entry.getValue().size() >= k)  {
+                        for(String uid : entry.getValue()) {
+                            count.put(uid, count.getOrDefault(uid, 0) + 1);
+                        }
+                    }
+                });
+            for(int i=0; i<id_list.length; i++) {
+                answer[i] = count.getOrDefault(id_list[i], 0);
+            }
+        
+        return answer;        
+    }
+}
