@@ -18,7 +18,6 @@ class Solution {
             }
             reportMap.get(reported).add(reporter);
         }
-            // ArrayList<Integer> answer = new ArrayList<>();
             int[] answer = new int[id_list.length];
             
             // k회 이상 신고 받을경우 이메일 발송
