@@ -2,14 +2,12 @@ import java.util.*;
 
 class Solution {
     
-    private static Map<String, String> str = new HashMap<>();
+    private static Map<String, String> str = new HashMap<>(); // <자식, 부모>
     private static Map<String, Integer> answer = new HashMap<>();
     
     // 직원 배열, 조직도 배열, 판매원 배열,판매 수량 배열,
     public int[] solution(String[] enroll, String[] referral, String[] seller, int[] amount) {
 
-        // <자식, 부모>
-        // Map<String, String> str = new HashMap<>();
         str = new HashMap<>();
         answer = new HashMap<>();
         
@@ -23,13 +21,13 @@ class Solution {
         // 판매했을 때
         for(int j=0; j<seller.length; j++) {
             
-            
             int minus = FirstSell(seller[j], amount[j]);
             
             // 부모를 찾으면서 금액 저장
             FindParent(seller[j], minus);
             
         }
+
         return Arrays.stream(enroll)
             .mapToInt(name -> answer.get(name))
             .toArray();
@@ -44,17 +42,17 @@ class Solution {
         return minus;
     }
     
-    public static void FindParent(String parent, int price) {
-        String grandParent = str.get(parent);
+    public static void FindParent(String child, int price) {
+        String parent = str.get(child);
         
-        if(price < 1 || grandParent.equals("-")) {
+        if(price < 1 || parent.equals("-")) {
             return;
         }
         int minus = price / 10;
         
-        answer.put(grandParent, answer.getOrDefault(grandParent, 0) + (price - minus));
+        answer.put(parent, answer.getOrDefault(parent, 0) + (price - minus));
         
-        FindParent(grandParent, minus);
+        FindParent(parent, minus);
         
     }
 }
