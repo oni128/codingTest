@@ -1,0 +1,60 @@
+import java.util.*;
+
+class Solution {
+    
+    private static Map<String, String> arc = new HashMap<>();
+    private static Map<String, Integer> answer = new HashMap<>();
+    
+    // 직원 배열, 조직도 배열, 판매원 배열,판매 수량 배열,
+    public int[] solution(String[] enroll, String[] referral, String[] seller, int[] amount) {
+
+        // <자식, 부모>
+        // Map<String, String> arc = new HashMap<>();
+        arc = new HashMap<>();
+        answer = new HashMap<>();
+        
+        for(int i=0; i<enroll.length; i++) {
+            arc.put(enroll[i], referral[i]);
+            answer.put(enroll[i], 0);
+        }
+        
+
+        
+        // 판매했을 때
+        for(int j=0; j<seller.length; j++) {
+            
+            
+            int minus = FirstSell(seller[j], amount[j]);
+            
+            // 부모를 찾으면서 금액 저장
+            FindParent(seller[j], minus);
+            
+        }
+        return Arrays.stream(enroll)
+            .mapToInt(name -> answer.get(name))
+            .toArray();
+    }
+    
+    public static int FirstSell(String seller, int amount) {
+        int total = amount * 100;
+        int minus = total / 10;
+        // 판매원 저장
+        answer.put(seller, answer.getOrDefault(seller, 0) + (total - minus));
+        
+        return minus;
+    }
+    
+    public static void FindParent(String parent, int price) {
+        String grandParent = arc.get(parent);
+        
+        if(price < 1 || grandParent.equals("-")) {
+            return;
+        }
+        int minus = price / 10;
+        
+        answer.put(grandParent, answer.getOrDefault(grandParent, 0) + (price - minus));
+        
+        FindParent(grandParent, minus);
+        
+    }
+}
