@@ -1,0 +1,53 @@
+import java.util.*;
+class Solution {
+    public static class Node {
+        int dest, cost;
+        
+        Node(int dest, int cost) {
+            this.dest = dest;
+            this.cost = cost;
+        }
+    }
+    public int solution(int N, int[][] road, int K) {
+        ArrayList<ArrayList<Node>> adjList = new ArrayList<>();
+        
+        for(int i=0; i<N+1; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        
+        // 인접리스트 생성
+        for(int i=0; i<road.length; i++) {
+            adjList.get(road[i][0]).add(new Node(road[i][1], road[i][2]));
+            adjList.get(road[i][1]).add(new Node(road[i][0], road[i][2]));
+        }
+        int[] dist = new int[N + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[1] = 0;
+        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingInt(k -> k.cost));
+        pq.add(new Node(1,0));
+        
+
+        while(!pq.isEmpty()) {
+            Node now = pq.poll();
+            
+            if(dist[now.dest] < now.cost) continue;
+            
+            
+            for(Node adj : adjList.get(now.dest)) { 
+                int newCost = now.cost + adj.cost;
+                if(dist[adj.dest] > newCost) {
+                    dist[adj.dest] = newCost;
+                    pq.add(new Node(adj.dest, newCost));
+                }
+            }
+        }
+        
+        int answer = 0;
+        for(int i=1; i<N+1; i++) {
+            if(dist[i] <= K) answer++;
+        }
+        
+        return answer;
+        
+    }
+}
