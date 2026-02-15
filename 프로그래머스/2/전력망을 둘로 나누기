@@ -1,0 +1,74 @@
+import java.util.*;
+class Solution {
+    
+    private static int N;
+    private static ArrayList<ArrayList<Integer>> wire;
+    
+    // 부모 노드.
+    public int solution(int n, int[][] wires) {
+        // 모두 연결.
+        N = n;
+        
+        wire = new ArrayList<>();
+        for(int i=0; i<n+1; i++) {
+            wire.add(new ArrayList<>()); 
+        }
+        
+        // 인접리스트 생성
+        for(int i=0; i<wires.length; i++) {
+            int a = wires[i][0];
+            int b = wires[i][1];
+            wire.get(a).add(Integer.valueOf(b));
+            wire.get(b).add(Integer.valueOf(a));
+        }
+
+        int answer = Integer.MAX_VALUE;
+        // 하나씩 끊으면서 두개의 송전탑의 개수 비교.
+        for(int i=0; i<wires.length; i++) {
+            int a = wires[i][0];
+            int b = wires[i][1];
+            
+            // 제거
+            wire.get(a).remove(Integer.valueOf(b));
+            wire.get(b).remove(Integer.valueOf(a));
+            
+            // a와 연결되어있는 송전탑
+            int aCount = find(a);
+            int bCount = N - aCount;
+            
+            int newCount = Math.abs(aCount - bCount);
+            
+            if(answer > newCount) answer = newCount;
+            
+            
+            // 다시 추가
+            wire.get(a).add(Integer.valueOf(b));
+            wire.get(b).add(Integer.valueOf(a));
+        }
+        return answer;
+        
+    }
+    public int find(int a) {
+        boolean[] visited = new boolean[N+1];
+        // 인접한 친구들 확인.
+        Deque<Integer> queue = new ArrayDeque<>();
+        queue.add(a);
+        visited[a] = true;
+        
+        int count = 1;
+        
+        while(!queue.isEmpty()) {
+            int now = queue.poll();
+        
+            for(int adj : wire.get(now)) {
+                if(!visited[adj]) {
+                    count++;
+                    visited[adj] = true;
+                    queue.add(adj);   
+                }
+            }
+        }
+        
+        return count;
+    }
+}
